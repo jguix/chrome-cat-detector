@@ -11,7 +11,6 @@ const playSound = (catIndex, delay) => {
   }, delay);
 };
 
-// A function to use as callback
 const onCatCount = (res) => {
   if (!res) return;
   const { catNumber, tabId } = res;
@@ -19,6 +18,7 @@ const onCatCount = (res) => {
 
   if (!catNumber) {
     chrome.browserAction.disable(tabId);
+    chrome.browserAction.setBadgeText({ text: "" });
     return;
   }
 
