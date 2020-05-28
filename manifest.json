@@ -1,0 +1,27 @@
+{
+  "name": "Cat detector",
+  "description": "Spots cats in the page you are browsing",
+  "manifest_version": 2,
+  "version": "1.0",
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "browser_action": {
+    "default_title": "Test Extension",
+    "default_popup": "cats-detected.html"
+  },
+  "icons": {
+    "16": "images/footprint-16.png",
+    "32": "images/footprint-32.png",
+    "48": "images/footprint-48.png",
+    "128": "images/footprint-128.png"
+  },
+  "permissions": ["activeTab"]
+}
