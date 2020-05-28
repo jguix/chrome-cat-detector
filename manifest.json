@@ -15,7 +15,7 @@
   ],
   "browser_action": {
     "default_title": "Test Extension",
-    "default_popup": "cats-detected.html"
+    "default_popup": "popup.html"
   },
   "icons": {
     "16": "images/footprint-16.png",
@@ -23,5 +23,5 @@
     "48": "images/footprint-48.png",
     "128": "images/footprint-128.png"
   },
-  "permissions": ["activeTab"]
+  "permissions": ["activeTab", "storage"]
 }

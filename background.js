@@ -13,6 +13,7 @@ const playSound = (catIndex, delay) => {
 
 // A function to use as callback
 const onCatCount = (res) => {
+  if (!res) return;
   const { catNumber, tabId } = res;
   console.log(`${catNumber} cats spotted in tab ${tabId}`);
 
@@ -41,4 +42,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     lastTabId = tab.id;
     chrome.tabs.sendMessage(tabId, { text: "cat_count", tabId }, onCatCount);
   }
+});
+
+chrome.tabs.onActivated.addListener(function (activeTab) {
+  chrome.tabs.sendMessage(
+    activeTab.tabId,
+    { text: "cat_count", tabId: activeTab.tabId },
+    onCatCount
+  );
 });
