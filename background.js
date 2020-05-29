@@ -1,5 +1,8 @@
+const maxMeows = 6;
+const meanDelay = 400;
+
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (changeInfo.status == "complete" && tab.active) {
+  if (changeInfo.status === "complete" && tab.active) {
     detectCats(tabId);
   }
 });
@@ -26,15 +29,15 @@ const deactivateIcon = () => {
 };
 
 const animateBadge = (catNumber) => {
-  // Limit sounds to maximum 6 cats
-  let i = catNumber - 5 > 0 ? catNumber - 5 : 1;
+  // Limit meows, we don't want to play 1000 sounds
+  let i = catNumber - maxMeows > 0 ? catNumber - maxMeows : 1;
   let j = 0;
   // Cats will meow at random times
   for (; i <= catNumber - 1; i++, j++) {
-    updateBadge(i, j * Math.random() * 400);
+    updateBadge(i, j * Math.random() * meanDelay);
   }
-  // Last cat should come last, let's give it the highest delay
-  updateBadge(catNumber, j * 500);
+  // Last cat should come last, let's give it a high delay without random weighing
+  updateBadge(catNumber, j * meanDelay);
 };
 
 const updateBadge = (catIndex, delay) => {
