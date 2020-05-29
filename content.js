@@ -1,6 +1,5 @@
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.text === "cat_count") {
-    // Call the specified callback
     sendResponse(countCats());
   }
 });
