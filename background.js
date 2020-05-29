@@ -11,26 +11,29 @@ const detectCats = (tabId) => {
   chrome.tabs.sendMessage(tabId, { text: "cat_count", tabId }, onCatCount);
 };
 
-const onCatCount = (res) => {
-  if (!res) return;
-  const { catNumber, tabId } = res;
-
+const onCatCount = (catNumber) => {
   if (!catNumber) {
-    chrome.browserAction.disable(tabId);
-    return;
+    deactivateIcon();
+  } else {
+    animateBadge(catNumber);
   }
+};
 
-  animateBadge(catNumber);
+const deactivateIcon = () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (activeTab) => {
+    chrome.browserAction.disable(activeTab[0].id);
+  });
 };
 
 const animateBadge = (catNumber) => {
   // Limit sounds to maximum 6 cats
   let i = catNumber - 5 > 0 ? catNumber - 5 : 1;
   let j = 0;
+  // Cats will meow at random times
   for (; i <= catNumber - 1; i++, j++) {
     updateBadge(i, j * Math.random() * 400);
   }
-  // Last cat should come last
+  // Last cat should come last, let's give it the highest delay
   updateBadge(catNumber, j * 500);
 };
 
