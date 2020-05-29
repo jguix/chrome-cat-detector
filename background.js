@@ -8,7 +8,7 @@ chrome.tabs.onActivated.addListener((activeTab) => detectCats(activeTab.tabId));
 
 const detectCats = (tabId) => {
   chrome.browserAction.setBadgeText({ text: "" });
-  chrome.tabs.sendMessage(tabId, { text: "cat_count", tabId }, onCatCount);
+  chrome.tabs.sendMessage(tabId, { text: "cat_count" }, onCatCount);
 };
 
 const onCatCount = (catNumber) => {

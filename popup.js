@@ -1,7 +1,7 @@
 window.onload = () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (activeTab) => {
     const tabId = activeTab[0].id;
-    chrome.tabs.sendMessage(tabId, { text: "cat_count", tabId }, onCatCount);
+    chrome.tabs.sendMessage(tabId, { text: "cat_count" }, onCatCount);
   });
 };
 
