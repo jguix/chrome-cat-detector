@@ -1,9 +1,9 @@
-function noscript(strCode) {
+const noscript = (strCode) => {
   return strCode.replace(/<script.*?>.*?<\/script>/gim, "");
-}
+};
 
 // Listen for messages
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   // If the received message has the expected format...
   if (msg.text === "cat_count") {
     var content =

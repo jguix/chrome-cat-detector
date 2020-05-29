@@ -1,8 +1,14 @@
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  // If the received message has the expected format...
-  if (msg.text === "display_cats") {
-    document.getElementById("cat_number").innerHTML = 14;
-    // Call the specified callback
-    // sendResponse();
-  }
-});
+const onCatCount = (res) => {
+  if (!res) return;
+  const { catNumber } = res;
+  document.getElementById(
+    "cat_image"
+  ).src = `https://cataas.com/c/s/${catNumber}%20happy%20cats%20detected?t=sq&width=350`;
+};
+
+window.onload = () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (activeTab) => {
+    const tabId = activeTab[0].id;
+    chrome.tabs.sendMessage(tabId, { text: "cat_count", tabId }, onCatCount);
+  });
+};
