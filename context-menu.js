@@ -1,3 +1,9 @@
+chrome.storage.sync.get(["autodetect"], ({ autodetect }) => {
+  if (autodetect === undefined) {
+    chrome.storage.sync.set({ autodetect: false });
+  }
+});
+
 chrome.contextMenus.removeAll();
 chrome.contextMenus.create({
   id: "DETECT_CATS",
