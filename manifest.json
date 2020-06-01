@@ -5,7 +5,7 @@
   "version": "1.0",
   "background": {
     "persistent": false,
-    "scripts": ["background.js"]
+    "scripts": ["background.js", "context-menu.js"]
   },
   "content_scripts": [
     {

@@ -61,25 +61,3 @@ const updateBadge = (catIndex, delay) => {
     chrome.browserAction.setBadgeText({ text: catIndex.toString() });
   }, delay);
 };
-
-chrome.contextMenus.removeAll();
-chrome.contextMenus.create({
-  id: "DETECT_CATS",
-  title: "Detect cats",
-  contexts: ["browser_action"],
-});
-chrome.contextMenus.create({
-  id: "AUTO_DETECT",
-  title: "Auto-detect",
-  type: "checkbox",
-  checked: false,
-  contexts: ["browser_action"],
-});
-
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === "DETECT_CATS") {
-    detectCats(tab.id);
-  } else if (info.menuItemId === "AUTO_DETECT") {
-    chrome.storage.sync.set({ autodetect: info.checked });
-  }
-});
