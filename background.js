@@ -3,22 +3,34 @@ const meanDelay = 400;
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.active) {
-    detectCats(tabId);
+    autoDetectCats(tabId);
   }
 });
 
-chrome.tabs.onActivated.addListener((activeTab) => detectCats(activeTab.tabId));
+chrome.tabs.onActivated.addListener((activeTab) =>
+  autoDetectCats(activeTab.tabId)
+);
+
+const autoDetectCats = (tabId) => {
+  chrome.browserAction.setBadgeText({ text: "" });
+  chrome.storage.sync.get(["autodetect"], ({ autodetect }) => {
+    if (autodetect) {
+      detectCats(tabId);
+    } else {
+      deactivateIcon();
+    }
+  });
+};
 
 const detectCats = (tabId) => {
-  chrome.browserAction.setBadgeText({ text: "" });
   chrome.tabs.sendMessage(tabId, { text: "cat_count" }, onCatCount);
 };
 
 const onCatCount = (catNumber) => {
-  if (!catNumber) {
-    deactivateIcon();
-  } else {
+  if (catNumber) {
     animateBadge(catNumber);
+  } else {
+    deactivateIcon();
   }
 };
 
@@ -49,3 +61,25 @@ const updateBadge = (catIndex, delay) => {
     chrome.browserAction.setBadgeText({ text: catIndex.toString() });
   }, delay);
 };
+
+chrome.contextMenus.removeAll();
+chrome.contextMenus.create({
+  id: "DETECT_CATS",
+  title: "Detect cats",
+  contexts: ["browser_action"],
+});
+chrome.contextMenus.create({
+  id: "AUTO_DETECT",
+  title: "Auto-detect",
+  type: "checkbox",
+  checked: false,
+  contexts: ["browser_action"],
+});
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "DETECT_CATS") {
+    detectCats(tab.id);
+  } else if (info.menuItemId === "AUTO_DETECT") {
+    chrome.storage.sync.set({ autodetect: info.checked });
+  }
+});

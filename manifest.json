@@ -22,5 +22,5 @@
     "48": "images/footprint-48.png",
     "128": "images/footprint-128.png"
   },
-  "permissions": ["activeTab"]
+  "permissions": ["activeTab", "contextMenus", "storage"]
 }
