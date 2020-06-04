@@ -24,6 +24,7 @@ const setMenuItems = () => {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "DETECT_CATS") {
     detectCats(tab.id);
+    highlightCats(tab.id);
   } else if (info.menuItemId === "AUTO_DETECT") {
     chrome.storage.sync.set({ autodetect: info.checked });
   }

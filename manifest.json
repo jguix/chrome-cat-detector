@@ -10,7 +10,8 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["content.js"]
+      "css": ["highlight.css"],
+      "js": ["content.js", "findAndReplaceDOMText.js"]
     }
   ],
   "browser_action": {

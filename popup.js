@@ -6,7 +6,9 @@ window.onload = () => {
 };
 
 const onCatCount = (catNumber) => {
-  document.getElementById(
-    "cat_image"
-  ).src = `https://cataas.com/c/s/${catNumber}%20happy%20cats%20detected?t=sq&width=350`;
+  const displayedCat = catNumber % 5;
+  document.getElementById("cat_number").innerHTML = catNumber;
+  document.getElementById("cat_image").src = chrome.extension.getURL(
+    `images/cat_${displayedCat}.jpg`
+  );
 };

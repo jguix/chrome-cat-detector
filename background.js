@@ -3,6 +3,7 @@ const meanDelay = 400;
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.active) {
+    highlightCats(tabId);
     autoDetectCats(tabId);
   }
 });
@@ -24,6 +25,10 @@ const autoDetectCats = (tabId) => {
 
 const detectCats = (tabId) => {
   chrome.tabs.sendMessage(tabId, { text: "cat_count" }, onCatCount);
+};
+
+const highlightCats = (tabId) => {
+  chrome.tabs.sendMessage(tabId, { text: "cat_highlight" });
 };
 
 const onCatCount = (catNumber) => {
